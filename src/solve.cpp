@@ -22,12 +22,12 @@ template <typename T> class Node {
 
 template <typename T> class LinkedList {
   public:
-    LinkedList() { 
-		this->head = nullptr;
-		endDummy.next = nullptr;
-	}
+    LinkedList() {
+        this->head = nullptr;
+        endDummy.next = nullptr;
+    }
 
-	Node<T> endDummy;
+    Node<T> endDummy;
     Node<T> begin() const { return *this->head; }
     Node<T> end() const { return endDummy; }
 
@@ -115,7 +115,6 @@ template <typename T> class LinkedList {
         }
     }
 
-#ifdef 0
     T get(size_t index) {
         if (this->head == nullptr) return -1;
 
@@ -136,7 +135,6 @@ template <typename T> class LinkedList {
         }
         return count;
     }
-#endif
 
   private:
     Node<T> *head;
