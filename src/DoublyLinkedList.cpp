@@ -1,9 +1,12 @@
 #include <bits/stdc++.h>
+
 // #define DEBUG_POP
 // #define DEBUG_POPLEFT
 // #define DEBUG_APPEND
 // #define DEBUG_APPENDLEFT
 // #define DEBUG_REMOVE
+// #define DEBUG
+// #define DEBUG_GETPOINTEROF
 
 using namespace std;
 
@@ -24,12 +27,12 @@ template <typename T> class Node {
     }
 };
 
-template <typename T> class LinkedList {
+template <typename T> class DoublyLinkedList {
   public:
     Node<T> *headNode;
     Node<T> *lastNode;
 
-    LinkedList() {
+    DoublyLinkedList() {
         this->headNode = nullptr;
         this->lastNode = nullptr;
     }
@@ -57,12 +60,20 @@ template <typename T> class LinkedList {
 
     void appendleft(T value) {
         Node<T> *newNode = new Node<T>(value);
+
+        if (this->headNode == nullptr && this->lastNode == nullptr) {
+            this->headNode = newNode;
+            this->lastNode = headNode;
+
+#ifdef DEBUG_APPENDLEFT
+            this->debug();
+#endif
+            return;
+        }
+
+        this->headNode->prev = newNode;
         newNode->next = this->headNode;
         this->headNode = newNode;
-
-        if (this->lastNode == nullptr) {
-            this->lastNode = headNode;
-        }
 
 #ifdef DEBUG_APPENDLEFT
         this->debug();
@@ -70,19 +81,36 @@ template <typename T> class LinkedList {
     }
 
     void remove(Node<T> *del) {
+#ifdef DEBUG_REMOVE
+        cout << "remove() called\n";
+#endif
         if (del == nullptr) {
+
+#ifdef DEBUG_REMOVE
             cout << "Not found\n";
+#endif
             return;
         }
+
         if (del == this->headNode) {
+            // del->next->prev = nullptr;
             this->headNode = del->next;
+            this->headNode->prev = nullptr;
         } else if (del == this->lastNode) {
             this->lastNode = lastNode->prev;
+            this->lastNode->next = nullptr;
         } else {
+            // del->prev is seemingly empty why?
+#ifdef DEBUG_REMOVE
+            cout << headNode->prev << " " << headNode->next << "\n";
+            cout << del->prev << " " << del->next << "\n";
+#endif
             del->prev->next = del->next;
             del->next->prev = del->prev;
         }
+
         delete del;
+
 #ifdef DEBUG_REMOVE
         this->debug();
 #endif
@@ -139,7 +167,7 @@ template <typename T> class LinkedList {
         if (this->lastNode == this->headNode) {
             T value = this->lastNode->value;
 
-            //delete this->headNode;
+            // delete this->headNode;
             delete this->lastNode;
 
             this->headNode = nullptr;
@@ -151,13 +179,13 @@ template <typename T> class LinkedList {
 #endif
             return value;
         }
-        
+
         Node<T> *del = this->lastNode;
         T value = del->value;
-        
+
         this->lastNode->prev->next = nullptr;
         this->lastNode = this->lastNode->prev;
-        
+
         delete del;
 
 #ifdef DEBUG_POP
@@ -194,16 +222,27 @@ template <typename T> class LinkedList {
         return count;
     }
 
-    Node<T> *getPointerof(T value) {
-        if (this->headNode == nullptr || this->lastNode == nullptr)
+    Node<T> *getPointerOf(T value) {
+
+        if (this->headNode == nullptr || this->lastNode == nullptr) {
             return nullptr;
-        Node<T> *current = this->headNode;
-        while (current != nullptr) {
-            if (current->value == value) {
-                return current;
-            }
-            current = current->next;
         }
+
+        Node<T> *current = this->headNode;
+
+        while (current != nullptr) {
+#ifdef DEBUG_GETPOINTEROF
+            cout << "current_value=" << current->value << "\n";
+            cout << "current->prev=" << current->prev << ", current=" << current
+                 << ", current->next=" << current->next << "\n";
+#endif
+            if (current->value != value) {
+                current = current->next;
+                continue;
+            }
+            return current;
+        }
+
         return nullptr;
     }
 
@@ -212,7 +251,9 @@ template <typename T> class LinkedList {
             return nullptr;
         Node<T> *current = this->headNode;
         for (size_t i = 0; i < index; i++) {
-            if (current == nullptr) return nullptr;
+            if (current == nullptr) {
+                return nullptr;
+            }
             current = current->next;
         }
         return current;
@@ -226,6 +267,7 @@ template <typename T> class LinkedList {
         return p->value;
     }
 
+#ifdef DEBUG
     void debug() {
         Node<T> *current = this->headNode;
 
@@ -248,4 +290,7 @@ template <typename T> class LinkedList {
 
         cout << "Empty list\n";
     }
+#endif
 };
+
+int main() {}

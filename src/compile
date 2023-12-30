@@ -1,3 +1,2 @@
 #!/usr/bin/env bash
 
-g++ TestLinkedList.cpp -o TestLinkedList -Wextra -O2 -march=native -std=gnu++2b && ./TestLinkedList

@@ -1,10 +1,10 @@
 #include "DoublyLinkedList.cpp"
 #include <bits/stdc++.h>
 
-LinkedList<int> appendleftTest() {
+DoublyLinkedList<int> appendleftTest() {
     cout << "appendleftTest called"
          << "\n";
-    LinkedList<int> a;
+    DoublyLinkedList<int> a;
     a.appendleft(1);
     a.appendleft(2);
     a.appendleft(3);
@@ -12,10 +12,10 @@ LinkedList<int> appendleftTest() {
     return a;
 }
 
-LinkedList<int> appendTest() {
+DoublyLinkedList<int> appendTest() {
     cout << "appendTest called"
          << "\n";
-    LinkedList<int> a;
+    DoublyLinkedList<int> a;
     a.append(1);
     a.append(2);
     a.append(3);
@@ -23,10 +23,10 @@ LinkedList<int> appendTest() {
     return a;
 }
 
-LinkedList<int> removeTest() {
+DoublyLinkedList<int> removeTest() {
     cout << "removeTest called"
          << "\n";
-    LinkedList<int> a;
+    DoublyLinkedList<int> a;
     a.append(1);
     a.append(2);
     a.append(3);
@@ -38,8 +38,8 @@ LinkedList<int> removeTest() {
     return a;
 }
 
-LinkedList<int> popTest() {
-    LinkedList<int> a;
+DoublyLinkedList<int> popTest() {
+    DoublyLinkedList<int> a;
     a.append(1);
     a.append(2);
     a.append(3);
@@ -51,8 +51,8 @@ LinkedList<int> popTest() {
     return a;
 }
 
-LinkedList<int> popleftTest() {
-    LinkedList<int> a;
+DoublyLinkedList<int> popleftTest() {
+    DoublyLinkedList<int> a;
     a.append(1);
     a.append(2);
     a.append(3);
@@ -62,6 +62,16 @@ LinkedList<int> popleftTest() {
     a.popleft();
     a.popleft();
     a.popleft();
+    return a;
+}
+
+DoublyLinkedList<int> insertTest() {
+    DoublyLinkedList<int> a;
+    a.insert(0, 1);
+    a.insert(0, 2); // [1, 2]
+    DoublyLinkedList<int> b;
+    b.insert(0, 3);
+    b.insert(0, 4);
     return a;
 }
 
@@ -71,6 +81,17 @@ int main() {
     // removeTest();
     // popTest();
     // popleftTest();
-
     // insertTest();
+
+    DoublyLinkedList<int> a;
+    a.append(5);
+    a.append(2);
+    a.append(3);
+    a.append(1);
+    a.remove(a.getPointerof(3));
+    a.append(6);
+    a.remove(a.getPointerof(5));
+    a.popleft();
+    a.pop();
+    a.debug();
 }
