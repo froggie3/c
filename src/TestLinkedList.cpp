@@ -52,7 +52,12 @@ LinkedList<int> popTest() {
 }
 
 LinkedList<int> popleftTest() {
-    LinkedList<int> a = appendleftTest();
+    LinkedList<int> a;
+    a.append(1);
+    a.append(2);
+    a.append(3);
+    a.append(4);
+    a.popleft();
     a.popleft();
     a.popleft();
     a.popleft();
@@ -64,8 +69,7 @@ int main() {
     // appendleftTest();
     // appendTest();
     // removeTest();
-
-    popTest();
+    // popTest();
     // popleftTest();
 
     // insertTest();

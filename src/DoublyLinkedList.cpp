@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
-#define DEBUG_POP
-#define DEBUG_POPLEFT
+// #define DEBUG_POP
+// #define DEBUG_POPLEFT
 // #define DEBUG_APPEND
 // #define DEBUG_APPENDLEFT
 // #define DEBUG_REMOVE
@@ -89,23 +89,36 @@ template <typename T> class LinkedList {
     }
 
     T popleft() {
-        if (this->headNode == nullptr) {
+        if (this->headNode == nullptr || this->lastNode == nullptr) {
+
+#ifdef DEBUG_POPLEFT
             cout << "Tried to pop from empty list\n";
+#endif
             return -1;
+        }
+
+        // 要素が最後の一つだけ
+        if (this->headNode == this->lastNode) {
+            T value = this->headNode->value;
+
+            this->headNode = nullptr;
+            this->lastNode = nullptr;
+
+            delete this->headNode;
+
+#ifdef DEBUG_POPLEFT
+            cout << "You popped the last element!\n";
+            this->debug();
+#endif
+            return value;
         }
 
         Node<T> *del = this->headNode; // 削除するアドレス
         T value = this->headNode->value;
 
         this->headNode = this->headNode->next;
-
-        // 要素が最後の一つだけ
-        if (this->headNode->next == this->lastNode) {
-            this->headNode = nullptr;
-            this->lastNode = nullptr;
-        }
-
         delete del;
+
 #ifdef DEBUG_POPLEFT
         this->debug();
 #endif
@@ -114,20 +127,27 @@ template <typename T> class LinkedList {
 
     T pop() {
         if (this->lastNode == nullptr || this->lastNode == nullptr) {
+
+#ifdef DEBUG_POP
             cout << "Tried to pop from empty list\n";
+            this->debug();
+#endif
             return -1;
         }
 
         // 要素が最後の一つだけ
         if (this->lastNode == this->headNode) {
             T value = this->lastNode->value;
+
             //delete this->headNode;
             delete this->lastNode;
+
             this->headNode = nullptr;
             this->lastNode = nullptr;
-            cout << "You popped the last element!\n";
+
 #ifdef DEBUG_POP
-        this->debug();
+            cout << "You popped the last element!\n";
+            this->debug();
 #endif
             return value;
         }
