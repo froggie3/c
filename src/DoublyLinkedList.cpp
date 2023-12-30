@@ -113,9 +113,23 @@ template <typename T> class LinkedList {
     }
 
     T pop() {
-        if (this->lastNode == nullptr) {
+        if (this->lastNode == nullptr || this->lastNode == nullptr) {
             cout << "Tried to pop from empty list\n";
             return -1;
+        }
+
+        // 要素が最後の一つだけ
+        if (this->lastNode == this->headNode) {
+            T value = this->lastNode->value;
+            //delete this->headNode;
+            delete this->lastNode;
+            this->headNode = nullptr;
+            this->lastNode = nullptr;
+            cout << "You popped the last element!\n";
+#ifdef DEBUG_POP
+        this->debug();
+#endif
+            return value;
         }
         
         Node<T> *del = this->lastNode;
@@ -127,7 +141,7 @@ template <typename T> class LinkedList {
         delete del;
 
 #ifdef DEBUG_POP
-        //this->debug();
+        this->debug();
 #endif
         return value;
     }
