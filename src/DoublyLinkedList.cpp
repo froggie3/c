@@ -117,19 +117,17 @@ template <typename T> class LinkedList {
             cout << "Tried to pop from empty list\n";
             return -1;
         }
-
-        Node<T> *delNode = this->lastNode;
-        Node<T> *prevNode = this->lastNode->prev;
-        T value = this->lastNode->value;
-
-        delete delNode;
-
-        this->lastNode = prevNode;
-
-        // assert(this->headNode == nullptr);
+        
+        Node<T> *del = this->lastNode;
+        T value = del->value;
+        
+        this->lastNode->prev->next = nullptr;
+        this->lastNode = this->lastNode->prev;
+        
+        delete del;
 
 #ifdef DEBUG_POP
-        this->debug();
+        //this->debug();
 #endif
         return value;
     }
