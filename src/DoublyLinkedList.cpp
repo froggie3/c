@@ -100,7 +100,7 @@ template <typename T> class DoublyLinkedList {
             this->lastNode = lastNode->prev;
             this->lastNode->next = nullptr;
         } else {
-            // del->prev is seemingly empty why?
+
 #ifdef DEBUG_REMOVE
             cout << headNode->prev << " " << headNode->next << "\n";
             cout << del->prev << " " << del->next << "\n";
