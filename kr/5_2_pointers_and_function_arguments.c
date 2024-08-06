@@ -28,6 +28,12 @@ int sp = 0;
 /* value stack */
 double val[MAXVAL]; 
 
+/* buffer for ungetch */
+char buf[BUFSIZE];
+
+/* next free position in buf */
+int bufp = 0;
+
 
 /* reverse Polish calculator */
 int main(void) 
@@ -38,10 +44,12 @@ int main(void)
 
     while ( (type = getop(s)) != EOF )
     {
-        switch (type)
+        switch ( type )
         {
             case NUMBER:
-                push(atof(s));
+                // printf("user inputed NUMBER \n");
+
+                push( atof(s) );
                 break;
             case '+':
                 push(pop() + pop());
@@ -125,6 +133,7 @@ int getint(int *pn)
 /* push: push f onto value stack */
 void push(double f)
 {
+    printf("current stack position at: %d\n", sp);
     if (sp < MAXVAL)
     {
         val[sp++] = f;
@@ -143,8 +152,10 @@ double pop(void)
     {
         return val[--sp];
     }
-    else {
+    else
+    {
         printf("error: stack empty\n");
+
         return 0.0;
     }
 }
@@ -153,10 +164,11 @@ double pop(void)
 /* getop: get next character or numeric operand */
 int getop(char s[])
 {
-
     int i, c;
 
-    while ( (s[0] = c = getch()) == ' ' || c == '\t' )
+    while ( (s[0] = c = getch()) == ' ' || 
+            c == '\t' 
+          )
     {
     } 
 
@@ -194,16 +206,7 @@ int getop(char s[])
     }
 
     return NUMBER;
-
 }
-
-
-
-/* buffer for ungetch */
-char buf[BUFSIZE];
-
-/* next free position in buf */
-int bufp = 0;
 
 
 /* get a (possibly pushed-back) character */
