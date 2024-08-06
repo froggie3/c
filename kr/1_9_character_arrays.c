@@ -1,4 +1,7 @@
 #include <stdio.h> 
+#include <string.h>
+#include <stdlib.h>
+
 #define MAXLINE 1000
 
 int my_get_line(char *, int);
@@ -6,25 +9,31 @@ int my_get_line(char *, int);
 void copy(char *, char *);
 
 /* print the longest input line */
-int main(int argc, char **argv)
+int main(void)
 {
-    int len;
-    int max;
+    size_t n = 0;
+    //ssize_t lineptr = NULL; 
+    char *lineptr = NULL; 
+
+    int len, max = 0;
     char line[MAXLINE];
     char longest[MAXLINE];
 
-    max = 0;
-    while ((len = my_get_line(line, MAXLINE)) > 0)
+    while ((len = getline(&lineptr, &n, stdout)) != -1)
     {
+        printf("%s", lineptr);
         if (len > max) {
             max = len;
-            copy(longest, line);
+            memcpy(longest, line, len);
+            // copy(longest, line);
         }
     }
 
     if (max > 0) {
         printf("%s", longest);
     }
+
+    free(lineptr);
 
     return 0;
 }
